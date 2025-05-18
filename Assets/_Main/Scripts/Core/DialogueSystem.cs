@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class DialogueSystem : MonoBehaviour
 {
-    [SerializeField] private DialogueContainer dialogueContainer = new DialogueContainer();
+    public DialogueContainer dialogueContainer = new DialogueContainer();
+
+
+    public static DialogueSystem instance;
+
+    private void Awake()
+    {
+        //creates a singleton for this script, and makes sure there is only ever one in the scene
+        if (instance == null)
+            instance = this;
+        else
+            DestroyImmediate(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
