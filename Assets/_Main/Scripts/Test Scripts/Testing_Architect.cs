@@ -26,14 +26,20 @@ namespace TESTING
         {
             ds = DialogueSystem.instance;
             architect = new TextArchitect(ds.dialogueContainer.dialogueText);
-            architect.buildMethod = TextArchitect.BuildMethod.instant;
+            architect.buildMethod = TextArchitect.BuildMethod.typewriter;
         }
 
         // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
+            {
                 architect.Build(lines[Random.Range(0, lines.Length)]);
-    }
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                architect.Append(lines[Random.Range(0, lines.Length)]);
+            }
+        }
     }
 }
