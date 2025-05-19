@@ -126,7 +126,20 @@ public class TextArchitect
     }
     private void Prepare_Typewriter()
     {
+        //resetting itself to make sure its ready for starting
+        tmpro.color = tmpro.color;
+        tmpro.maxVisibleCharacters = 0;
+        tmpro.text = preText;
 
+        //this checks for if there is pretext and updates before checking if it is visible
+        if (preText != "")
+        {
+            tmpro.ForceMeshUpdate();
+            tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+        }
+
+        tmpro.text += targetText; //adds the target
+        tmpro.ForceMeshUpdate();
     }
     private void Prepare_Fade()
     {
@@ -136,7 +149,13 @@ public class TextArchitect
     //typrewriter text
     private IEnumerator Build_Typewriter()
     {
-        yield return null;
+        //makes sure we are getting the max visible characters to the max character count
+        while (tmpro.maxVisibleCharacters < tmpro.textInfo.characterCount)
+        {
+            tmpro.maxVisibleCharacters += hurryUp ? characterPerCycle * 5: characterPerCycle; 
+
+            yield return new WaitForSeconds(0.015f / speed); //makes sure it doesn't appear instantly 
+        }
     }
 
     //fade text
