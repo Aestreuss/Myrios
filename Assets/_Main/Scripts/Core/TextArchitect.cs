@@ -93,11 +93,31 @@ public class TextArchitect
                 yield return Build_Fade();
                 break;
         }
+
+        OnComplete();
     }
 
     private void OnComplete()
     {
         buildProcess = null;
+        hurryUp = false;
+    }
+
+    //double clicking speeds up, triple click completes it
+    public void ForceComplete()
+    {
+        switch (buildMethod)
+        {
+            case BuildMethod.typewriter:
+                tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+                break;
+            case BuildMethod.fade:
+                tmpro.ForceMeshUpdate();
+                break;
+        }
+
+        Stop();
+        OnComplete();
     }
 
     //instant text
@@ -143,7 +163,46 @@ public class TextArchitect
     }
     private void Prepare_Fade()
     {
+        tmpro.text = preText;
+        if (preText != "")
+        {
+            tmpro.ForceMeshUpdate();
+            preTextLength = tmpro.textInfo.characterCount;
+        }
+        else
+            preTextLength = 0;
 
+        tmpro.text += targetText;
+        tmpro. maxVisibleCharacters = int.MaxValue;
+        tmpro.ForceMeshUpdate();
+
+        TMP_TextInfo textInfo = tmpro.textInfo; 
+
+        Color colorVisable = new Color(textColour.r, textColour.g, textColour.b, 1);
+        Color colorHidden = new Color(textColour.r, textColour.g, textColour.b, 0);
+
+        Color32[] vertexColors = textInfo.meshInfo[textInfo.characterInfo[0].materialReferenceIndex].colors32;
+
+        for (int i = 0; i < textInfo.characterCount; i++)
+        {
+            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+
+            if(!charInfo.isVisible) 
+                continue;
+
+            if (i < preTextLength)
+            {
+                for(int v = 0; v < 4; v++)
+                    vertexColors[charInfo.vertexIndex + v] = colorVisable;
+            }
+            else
+            {
+                for (int v = 0; v < 4; v++)
+                    vertexColors[charInfo.vertexIndex + v] = colorHidden;
+            }
+        }
+
+        tmpro.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
     }
 
     //typrewriter text
@@ -161,6 +220,51 @@ public class TextArchitect
     //fade text
     private IEnumerator Build_Fade()
     {
-        yield return null;
+        int minRange = preTextLength;
+        int maxRange = minRange + 1;
+
+        byte alphaThreshold = 15;
+
+        TMP_TextInfo textInfo = tmpro.textInfo;
+
+        Color32[] vertexColors = textInfo.meshInfo[textInfo.characterInfo[0].materialReferenceIndex].colors32;
+        float[] alphas = new float[textInfo.characterCount]; //transitioning or lerping the colours from color32 is choppy because its in bytes so creating a new alpha that holds the info will be smoother
+
+        while (true)
+        {
+            float fadeSpeed = ((hurryUp ? characterPerCycle * 5 : characterPerCycle) * speed) *4f;
+
+            for (int i = minRange; i < maxRange; i++)
+            {
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+
+                if (!charInfo.isVisible)
+                    continue;
+
+                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
+                alphas[i] = Mathf.MoveTowards(alphas[i], 255, fadeSpeed);
+
+                for (int v = 0; v < 4; v++)
+                    vertexColors[charInfo.vertexIndex + v].a = (byte)alphas[i];
+
+                if (alphas[i] >= 255)
+                    minRange++;
+            }
+
+            tmpro.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+
+            bool lastCharacterIsInvisible = !textInfo.characterInfo[maxRange - 1].isVisible;
+            if (alphas[maxRange - 1] > alphaThreshold || lastCharacterIsInvisible) 
+            {
+                if (maxRange < textInfo.characterCount) 
+                    maxRange++;
+                else if (alphas[maxRange - 1] >= 255 || lastCharacterIsInvisible) //if last character has reached max opaqueness it will break out of this and end build
+                    break;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+
     }
 }
