@@ -1,5 +1,5 @@
-john"hi world"
+john "hi world"
 
-pete"hi there"
+pete "hi there"
 
-narrator"they said hi to eachother"
+narrator "they said hi to eachother"
