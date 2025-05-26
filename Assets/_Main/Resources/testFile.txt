@@ -1,5 +1,7 @@
-john "hi world"
+John "Hi World" list(items -f long), playsong("Intro Song" -v 1)
 
-pete "hi there"
+setScene("Classroom" -s 5.5)
+
+Pete "hi \"there\""
 
 narrator "they said hi to eachother"
