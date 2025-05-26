@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TestFiles : MonoBehaviour
 {
-    private string fileName = "testFile"; //note = when loading something from resources, you do not specify the file extention, only the name, otherwise it can't find it 
+    // private string fileName = "testFile"; //note = when loading something from resources, you do not specify the file extention, only the name, otherwise it can't find it 
 
+    [SerializeField] private TextAsset fileName;
     // Start is called before the first frame update
     void Start()
     {
