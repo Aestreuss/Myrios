@@ -31,7 +31,7 @@ namespace DIALOGUE
 
         IEnumerator RunningConversation(List<string> conversation)
         {
-
+            yield return null;
         }
     }
 }
