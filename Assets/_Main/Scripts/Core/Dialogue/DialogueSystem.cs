@@ -7,9 +7,11 @@ namespace DIALOGUE
     public class DialogueSystem : MonoBehaviour
     {
         public DialogueContainer dialogueContainer = new DialogueContainer();
-
+        private ConversationManager conversationManager = new ConversationManager();
 
         public static DialogueSystem instance;
+
+        public bool isRunningConversation => conversationManager.isRunning;
 
         private void Awake()
         {
@@ -20,17 +22,17 @@ namespace DIALOGUE
                 DestroyImmediate(gameObject);
         }
 
-        // Start is called before the first frame update
-        void Start()
+        public void Say(string speaker, string dialogue)
         {
-
+            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
+            Say(conversation);
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Say(List<string> conversation)
         {
-
+            conversationManager.StartConversation(conversation);
         }
+
     }
 }
 
