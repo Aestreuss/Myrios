@@ -7,7 +7,8 @@ namespace DIALOGUE
     public class DialogueSystem : MonoBehaviour
     {
         public DialogueContainer dialogueContainer = new DialogueContainer();
-        private ConversationManager conversationManager = new ConversationManager();
+        private ConversationManager conversationManager;
+        private TextArchitect architect;
 
         public static DialogueSystem instance;
 
@@ -17,10 +18,26 @@ namespace DIALOGUE
         {
             //creates a singleton for this script, and makes sure there is only ever one in the scene
             if (instance == null)
+            {
                 instance = this;
+                Initialize();
+            }
             else
                 DestroyImmediate(gameObject);
         }
+
+        bool _initialized = false; //only want it to initialize once 
+        private void Initialize()
+        {
+            if (_initialized) 
+                return;
+
+            architect = new TextArchitect(dialogueContainer.dialogueText);
+            conversationManager = new ConversationManager(architect);
+        }
+
+        public void ShowSpeakerName(string speakerName = "") => dialogueContainer.nameContainer.Show(speakerName);
+        public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
 
         public void Say(string speaker, string dialogue)
         {
