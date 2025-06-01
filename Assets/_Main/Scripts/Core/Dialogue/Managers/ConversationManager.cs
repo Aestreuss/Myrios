@@ -66,7 +66,6 @@ namespace DIALOGUE
                     yield return Line_RunCommands(line);
                 }
 
-                yield return new WaitForSeconds(1);
             }
         }
 
