@@ -215,6 +215,7 @@ public class TextArchitect
 
             yield return new WaitForSeconds(0.015f / speed); //makes sure it doesn't appear instantly 
         }
+
     }
 
     //fade text

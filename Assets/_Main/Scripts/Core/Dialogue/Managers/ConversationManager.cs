@@ -15,9 +15,17 @@ namespace DIALOGUE
 
         private TextArchitect architect = null;
 
+        private bool userPrompt = false;
+
         public ConversationManager(TextArchitect architect)
         {
             this.architect = architect;
+            dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
+        }
+
+        private void OnUserPrompt_Next()
+        {
+            userPrompt = true;
         }
 
         public void StartConversation(List<string> conversation)
@@ -70,17 +78,45 @@ namespace DIALOGUE
             else
                 dialogueSystem.HideSpeakerName();
 
-            //build dialogue
-            architect.Build(line.dialogue);
+            yield return BuildDialogue(line.dialogue);
 
-            while(architect.isBuilding)
-                yield return null;
+            //wait for user input
+            yield return WaitForUserInput();
+                
         }
 
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
         {
             Debug.Log(line.commands);
             yield return null;
+        }
+
+        IEnumerator BuildDialogue(string dialogue)
+        {
+            //build dialogue
+            architect.Build(dialogue);
+
+            while (architect.isBuilding)
+            {
+                if (userPrompt)
+                {
+                    if (!architect.hurryUp)
+                        architect.hurryUp = true;
+                    else
+                        architect.ForceComplete();
+
+                    userPrompt = false;
+                }
+                yield return null;
+            }
+        }
+
+        IEnumerator WaitForUserInput()
+        {
+            while(!userPrompt)
+                yield return null;
+            
+            userPrompt = false;
         }
     }
 }
