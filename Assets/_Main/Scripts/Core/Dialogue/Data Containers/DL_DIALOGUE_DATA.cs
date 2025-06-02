@@ -68,6 +68,8 @@ namespace DIALOGUE
             public float signalDelay;
 
             public enum StartSignal { NONE, C, A, WA, WC}
+
+            public bool appendText => (startSignal == StartSignal.A || startSignal == StartSignal.WA);
         }
     }
 }

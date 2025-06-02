@@ -17,22 +17,7 @@ public class TestDialogueFiles : MonoBehaviour
     {
         List<string> lines = FileManager.ReadTextAsset(file);
 
-        foreach (string line in lines)
-        {
-            if (string.IsNullOrEmpty(line)) 
-                continue;
-
-            Debug.Log($"Segmenting line '{line}'");
-            DIALOGUE_LINE dlLine = DialogueParser.Parse(line);
-
-            int i = 0;
-            foreach (DL_DIALOGUE_DATA.DIALOGUE_SEGMENT segment in dlLine.dialogue.segments)
-            {
-                Debug.Log($"Segment [{i++}] = '{segment.dialogue} [signal={segment.startSignal.ToString()}{(segment.signalDelay > 0 ? $" {segment.signalDelay}" : $"")}]");
-            }
-        }
-
-        //DialogueSystem.instance.Say(lines);
+        DialogueSystem.instance.Say(lines);
 
     }
 }
