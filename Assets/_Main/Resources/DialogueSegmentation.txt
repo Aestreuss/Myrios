@@ -2,7 +2,7 @@
 
 John as ??? "I...{wa 2} I don't think this is okay Pete.{a} Everything just feels so wrong"
 
-Pete at 0.5:0.5 "It's okay,{wa 1} I promise,{wa 1} you will be just fine"
+Pete at 0.5:0.5 "It's okay,{wa 1} I promise,{wa 1} you will be just fine John"
 
 John "I just don't know Pete.{c} This could go in so many directions... {wa 1} like..."
 

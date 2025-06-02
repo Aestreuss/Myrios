@@ -6,7 +6,8 @@ using UnityEngine;
 public class TestDialogueFiles : MonoBehaviour
 {
     [SerializeField] private TextAsset file = null;
-    // Start is called before the first frame update
+    
+
     void Start()
     {
         StartConversation();
