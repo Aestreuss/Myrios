@@ -73,7 +73,7 @@ namespace DIALOGUE
         {
             //shows or hides the speaker name if one is available 
             if (line.hasSpeaker)
-                dialogueSystem.ShowSpeakerName(line.speaker);
+                dialogueSystem.ShowSpeakerName(line.speaker.displayname);
 
             yield return BuildLineSegments(line.dialogue);
 
