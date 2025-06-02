@@ -1,0 +1,11 @@
+John "I...{wa 2} I don't think this is okay Pete.{a} Everything just feels so wrong"
+
+Pete "It's okay,{wa 1) I promise,{wa 1} you will be just fine"
+
+John "I just don't know Pete.{c} This could go in so many directions... {wa 1} like..."
+
+Pete "Like what John? {wc 1} Why can't you just trust me on this?"
+
+John "It's not like I don't trust you !!"
+
+Pete "I see.{a} I see how it is."
