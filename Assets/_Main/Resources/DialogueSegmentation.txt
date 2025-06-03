@@ -11,3 +11,5 @@ Pete "Like what John? {wc 1} Why can't you just trust me on this?"
 John "It's not like I don't trust you !!"
 
 Pete "I see.{a} I see how it is."
+
+setBackground("Bedroom night" -t)

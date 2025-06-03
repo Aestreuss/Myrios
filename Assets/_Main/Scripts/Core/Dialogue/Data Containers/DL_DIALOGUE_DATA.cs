@@ -9,8 +9,6 @@ namespace DIALOGUE
         public List<DIALOGUE_SEGMENT> segments;
         private const string segmentIdentifierPattern = @"\{[ca]\}|\{w[ca]\s\d*\.?\d*\}"; //@ means everything in this dialogue will be an actual string
 
-        public bool hasDialogue => segments.Count > 0;
-
         public DL_DIALOGUE_DATA(string rawDialogue)
         {
             segments = RipSegments(rawDialogue);
