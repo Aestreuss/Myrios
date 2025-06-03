@@ -11,7 +11,7 @@ namespace DIALOGUE
     public class DialogueParser 
     {
         // \w is a word character * is any character amount any amount of times \s is white space
-        private const string commandRegexPattern = @"\w*[^\s]\("; //so this formula is, a word of any length as long as it is not proceeded by a white space and looking for a (
+        private const string commandRegexPattern = @"[\w\[\]]*[^\s]\("; //so this formula is, a word of any length as long as it is not proceeded by a white space and looking for a (
         public static DIALOGUE_LINE Parse(string rawLine)
         {
             Debug.Log($"Parsing line - '{rawLine}'");
