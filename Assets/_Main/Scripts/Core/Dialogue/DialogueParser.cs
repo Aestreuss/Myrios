@@ -54,14 +54,18 @@ namespace DIALOGUE
             //identify command pattern
             //formula for commands = CommandName(arguments go here) example. PlaySong("Hi there" -v 1 -p 0.3). white space splits each arguemnt quotations encapsulate two word names and stuff
             Regex commandRegex = new Regex(commandRegexPattern);
-            Match match = commandRegex.Match(rawLine);
+            MatchCollection matches = commandRegex.Matches(rawLine);
             int commandStart = -1;
-            if (match.Success)
+            foreach (Match match in matches)
             {
                 //this is if command is detected with no dialogue/speaker
-                commandStart = match.Index;
+                if (match.Index < dialogueStart || match.Index > dialogueEnd)
+                {
+                    commandStart = match.Index;
+                    break;
+                }
 
-                if (dialogueStart == -1 && dialogueEnd == -1)
+                if (commandStart != -1 && (dialogueStart == -1 && dialogueEnd == -1))
                     return ("", "", rawLine.Trim());
 
             }
@@ -78,7 +82,7 @@ namespace DIALOGUE
             else if (commandStart != -1 && dialogueStart > commandStart)
                 commands = rawLine;
             else 
-                speaker = rawLine;
+                dialogue = rawLine;
 
                 return (speaker, dialogue, commands);
         }
