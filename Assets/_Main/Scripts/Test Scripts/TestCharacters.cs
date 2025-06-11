@@ -11,7 +11,7 @@ namespace TESTING
         // Start is called before the first frame update
         void Start()
         {
-            
+            //Character Asterios = CharacterManager.instance.CreateCharacter("Asterios");
             //Character StoryTeller = CharacterManager.instance.CreateCharacter("StoryTeller");
             //Character Myrth = CharacterManager.instance.CreateCharacter("Myrth");
 
@@ -21,18 +21,14 @@ namespace TESTING
 
         IEnumerator Test()
         {
-            Character Asterios = CharacterManager.instance.CreateCharacter("Asterios");
+            Character Myrth = CharacterManager.instance.CreateCharacter("Myrth");
 
-            List<string> lines = new List<string>()
-            {
-                "HI",
-                "this is just a line",
-                "and another line",
-                "and the final line"
-            };
-            yield return Asterios.Say(lines);
-          
-            Debug.Log("finished");
+            yield return Myrth.Show();
+            yield return new WaitForSeconds(0.5f);
+            yield return Myrth.Hide();
+            yield return new WaitForSeconds(0.5f);
+            yield return Myrth.Show();
+            yield return Myrth.Say("uh.. hello there");
         }
 
         // Update is called once per frame

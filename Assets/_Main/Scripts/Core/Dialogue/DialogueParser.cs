@@ -43,7 +43,6 @@ namespace DIALOGUE
                         dialogueStart = i;
                     else if (dialogueEnd == -1)
                         dialogueEnd = i;
-
                 }
                 else
                     isEscaped = false;
@@ -58,7 +57,7 @@ namespace DIALOGUE
             int commandStart = -1;
             foreach (Match match in matches)
             {
-                //this is if command is detected with no dialogue/speaker
+                //this is if no commands is detected with dialogue
                 if (match.Index < dialogueStart || match.Index > dialogueEnd)
                 {
                     commandStart = match.Index;
@@ -67,8 +66,9 @@ namespace DIALOGUE
 
                 if (commandStart != -1 && (dialogueStart == -1 && dialogueEnd == -1))
                     return ("", "", rawLine.Trim());
-
             }
+
+            
 
             //this is for in the case that dialogue or multiword arguments are in the command, it checks to see if it is dialogue 
             if (dialogueStart != -1 && dialogueEnd != -1 && (commandStart == -1 || commandStart > dialogueEnd))

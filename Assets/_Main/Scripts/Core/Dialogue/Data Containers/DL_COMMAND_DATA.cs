@@ -79,7 +79,6 @@ namespace DIALOGUE
 
             return argList.ToArray();
         }
-
     }
 }
 

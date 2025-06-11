@@ -1,0 +1,6 @@
+
+Myrth "Aster?"
+
+enter Myrth "How is everyone?"
+
+Asterios "They are fine.{wa 0.5} You?"

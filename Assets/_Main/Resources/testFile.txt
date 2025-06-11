@@ -1,7 +1,0 @@
-John "Hi World" list(items -f long), playsong("Intro Song" -v 1)
-
-setScene("Classroom" -s 5.5)
-
-Pete "hi \"there\""
-
-narrator "they said hi to eachother and stared into each others souls as they wandered off into the distance holding hands"

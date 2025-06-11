@@ -1,3 +1,4 @@
+using CHARACTERS;
 using COMMANDS;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace DIALOGUE
         public bool isRunning => process != null;
 
         private TextArchitect architect = null;
+
+        public bool dialogueDone;
 
         private bool userPrompt = false;
 
@@ -72,6 +75,12 @@ namespace DIALOGUE
                 if (line.hasDialogue)
                     //wait for user input
                     yield return WaitForUserInput();
+                else
+                {
+                    StopConversation();
+                    Debug.Log("dialogue is done");
+                }
+
 
             }
         }
@@ -80,10 +89,25 @@ namespace DIALOGUE
         {
             //shows or hides the speaker name if one is available 
             if (line.hasSpeaker)
-                dialogueSystem.ShowSpeakerName(line.speakerData.displayname);
-
+                HandleSpeakerLogic(line.speakerData);
+                
+            //build dialogue
             yield return BuildLineSegments(line.dialogueData);
                 
+        }
+
+        private void HandleSpeakerLogic(DL_SPEAKER_DATA speakerData)
+        {
+            bool characterMustBeCreated = (speakerData.makeCharacterEnter);
+
+            Character character = CharacterManager.instance.GetCharacter(speakerData.name, createIfDoesNotExist: characterMustBeCreated);
+
+            if (speakerData.makeCharacterEnter && (!character.isVisible && !character.isRevealing))
+                character.Show();
+
+            //add character name to the UI
+            dialogueSystem.ShowSpeakerName(speakerData.displayname);
+
         }
 
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
