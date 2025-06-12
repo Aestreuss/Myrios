@@ -21,6 +21,6 @@ public class SceneLoader : MonoBehaviour
 
     void StartGame()
     {
-        SceneManager.LoadScene("maingame");
+        
     }
 }
