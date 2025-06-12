@@ -1,0 +1,3 @@
+narrator "In this world there are many different races and roles that people take up, whether you are a mage,{wa 1} a paladin,{wa 1} a rogue and so on.{c} There are also four main houses that control a lot of the decisions that happen in this world,{a} in a way they were like a council ."
+
+narrator "You belong to one of those houses.{a} Your name is Asterios Opia,{wa 1} The current head of house for House Opia.{wa 1} You are a Serophage Sorcerer, otherwise known "
